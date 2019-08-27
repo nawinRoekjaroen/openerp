@@ -1,50 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <!--
+        +++++++++++++++++++++++
+          PERSONAL INFORMATION
+        +++++++++++++++++++++++
+        -->
         <record id="test_module_form" model="ir.ui.view">
             <field name="name">test.module.form</field>
             <field name="model">test.module</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Name Test">
-                    <group colspan="4" col="4">
+                <form string="New Information">
+                    <group colspan="2" col="4">
                         <field name="title"/>
                         <field name="fname" select="1"/>
-                        <field name="lname" select="1"/>
+                        <field name="laname" select="1"/>
                         <field name="age"/>
-                        <field name="gender"/>
-                        <field name="gender2"/>
-                        <field name="dateofbirth"/>
                     </group>
+                    <notebook colspan="4">
+                        <page string="Personal Information">
+                            <group col="2" colspan="2">
+                                <separator colspan="2" string="Status"/>
+                                <field name="marital"/>
+                                <field name="country_id"/>
+                                <field name="religion_id"/>
+                                <field name="birthday"/>
+                                <field name="sex"/>
+                            </group>
+                            <group col="2" colspan="2">
+                                <separator colspan="2" string="Contract Information"/>
+                                <field name="address_home_id" colspan="2"/>
+                                <field name="phone" select="1"/>
+                                <field name="email"/>
+                            </group>
+                            <group col="2" colspan="2">
+                                <separator colspan="2" string="Work Station"/>
+                                <field name="work_location"/>
+                                <field name="work_phone"/>
+                            </group>
+                            <newline/>
+                                <field colspan="4" name="test_id" nolabel="1" widget="one2many_list"/>
+                        </page>
+                        <page string="Employee Inmformation">
+                            <group colspan="2" col="2">
+                                <field name="gid"/>
+                                <field name="date_id"/>
+                            </group>
+                        </page>
+                        <page string="Note">
+                            <field colspan="2" nolabel="1" name="note"/>
+                        </page>
+                    </notebook>
                 </form>
             </field> 
         </record>
-        <record id="test_module_tree" model="ir.ui.view">
+        <record model="ir.ui.view" id="edu_psn_tree">
+            <field name="name">edu.psn.tree</field>
+            <field name="model">edu.psn</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Education">
+                    <field name="graduated"/>
+                    <field name="degree"/> 
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="edu_psn_form">
+            <field name="name">edu.psn.form</field>
+            <field name="model">edu.psn</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Education">
+                    <field colspan="4" name="graduated"/>
+                    <field name="degree"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="test_module_tree">
             <field name="name">test.module.tree</field>
             <field name="model">test.module</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Name Test">
-                    <field name="title"/>
                     <field name="fname" select="1"/>
-                    <field name="lname" select="1"/>
+                    <field name="laname"/>
+                    <field name="address_home_id"/>
+                    <field name="phone"/>
+                    <field name="email"/>
                     <field name="age"/>
-                    <field name="gender"/>
-                    <field name="gender2"/>
-                    <field name="dateofbirth"/>
+                    
                 </tree>
             </field>
         </record>
+
         <record model="ir.actions.act_window" id="action_test_seq">
-            <field name="name">Test Module</field>
+            <field name="name">New Information</field>
             <field name="res_model">test.module</field>
             <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_test_seqq">
+            <field name="name">Information</field>
+            <field name="res_model">test.module</field>
+            <field name="view_type">tree</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem id="main_menu_test" name="Test Name"/>
-	<!-- 
-        <manuitem id="menu_test" parent="main_menu_test"
-                  name="Information" action="action_test_seq"/>
-	-->
+
+        <!--
+        ++++++++++++++++++++
+          MENU
+        ++++++++++++++++++++
+        -->
+        <menuitem id="main_menu_test" name="Personal Information"/> 
+        <menuitem id="menu_tst" parent="menu_tstr"
+                  name="New Information" action="action_test_seq"/>
+        <menuitem id="menu_tstr" parent="main_menu_test"
+                  name="Personal Information"/>
+        <menuitem id="menu_edu" parent="main_menu_test" name="Education"/>
+        <menuitem id="menu_add" parent="menu_tstr"
+                  name="Information" action="action_test_seqq"/>
+        <menuitem id="open_menu_edu" parent="menu_edu" name="Education" action=""/>
+        <!--
+        +++++++++++++++++++++
+          Education
+        +++++++++++++++++++++
+        -->
+    
     </data>
 </openerp>

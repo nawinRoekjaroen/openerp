@@ -8,6 +8,6 @@
     "depends" : ["base"],
     "init_xml" : [],
     "update_xml" : ["test_view.xml"],
-    "active": False,
+    "active": True,
     "installable": True
 }

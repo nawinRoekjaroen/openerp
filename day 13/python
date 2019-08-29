@@ -1,0 +1,11 @@
+  #mode debug
+   def debug(self, cr, uid, ids, context={}):
+        import pdb;pdb.set_trace()
+        return True
+   #เรียก module อื่น     
+   self.pool.get('test.module') 
+   #Print detial
+   pp self.pool.__dict__
+   #Type
+   type(self._columns)
+   

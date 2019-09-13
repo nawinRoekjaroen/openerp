@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--
+        ++++++++++++++++++++++++++++++
+		Main Menu
+        ++++++++++++++++++++++++++++++
+        -->
+        <menuitem id="main_menu_custom" name="Sales and Purchase" />
+
+	<!--
+	+++++++++++++++++++++++++++++
+		Menu Purchase
+	+++++++++++++++++++++++++++++
+	-->
+        <record id="view_sale_form" model="ir.ui.view">
+            <field name="name">view.sale.form</field>
+            <field name="model">custom.market</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order">
+                    <group colspan="4" col="8">
+                        <field name="name" select="1"/>
+                        <field name="product_id" select="1"/>
+                        <field name="pricelist_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Purchase Order">
+                            <newline/>
+                                <field colspan="4" name="sales_id" nolabel="1" widget="one2many_list"/>
+                        </page>
+                    </notebook>
+                    <newline/>
+                        <group col="7" colspan="2">
+                            <field name="amount_total"/> 
+                            <button name="button_demo" string="Compute" type="object"/>
+                        </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_sale_sale_tree" model="ir.ui.view">
+            <field name="name">view.sale.sale.tree</field>
+            <field name="model">custom.market</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="amount_total2" sum="Total Purchase"/>
+                    <field name="amount_total" sum="Total Sales"/>
+                    <field name="sum_total" sum="Benefit"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="view_sale_sale_tree2" model="ir.ui.view">
+            <field name="name">view.sale.sale.tree2</field>
+            <field name="model">custom.market</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="amount_total" sum="Total Sales"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sale_order">
+            <field name="name">Purchase Order</field>
+            <field name="res_model">custom.market</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_sale_form"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_sale_order2">
+            <field name="name">Benefit</field>
+            <field name="res_model">custom.market</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_sale_tree"/>
+            <field name="domain">[]</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sale_order3">
+            <field name="name">Purchase</field>
+            <field name="res_model">custom.market</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_sale_tree2"/>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem id="menu_custom_sale" parent="main_menu_custom" name="Purchase"/>
+        <menuitem id="sale_orders" parent="menu_custom_sale" name="Purchase Orders" action="action_sale_order"/>
+        <menuitem id="sale_benefit" parent="menu_benefit" name="Benefit" action="action_sale_order2"/>
+        <menuitem id="sale_orders2" parent="menu_custom_sale" name="Purchase" action="action_sale_order3"/>
+	<!--
+        +++++++++++++++++++++++++++++
+                Menu Sale
+        +++++++++++++++++++++++++++++
+        -->
+        <record id="view_purchase_form" model="ir.ui.view">
+            <field name="name">view.purchase.form</field>
+            <field name="model">custom.market</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sale Order">
+                    <group colspan="4" col="8">
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="pricelist_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Sale Order">
+                            <newline/>
+                                <field colspan="4" name="purchase_id" nolabel="1" widget="one2many_list"/>  
+                        </page>
+                    </notebook>
+                    <newline/>
+                        <group col="7" colspan="2">
+                            <field name="amount_total2"/> 
+                            <button name="button_demo2" string="Compute" type="object"/>
+                        </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_purchase_tree" model="ir.ui.view">
+            <field name="name">view.purchase.tree</field>
+            <field name="model">custom.market</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sale">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="amount_total2"/> 
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_purchase_order">
+            <field name="name">Sale Order</field>
+            <field name="res_model">custom.market</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_purchase_form"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_purchase_order_tree">
+            <field name="name">Sale</field>
+            <field name="res_model">custom.market</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_purchase_tree"/>
+        </record>
+        <menuitem id="menu_custom_purchase" parent="main_menu_custom" name="Sales"/>
+<!--        <menuitem id="purchase_orders" parent="menu_custom_purchase" name="Sale Orders" action="action_purchase_order"/>  -->
+        <menuitem id="purchase_orders2" parent="menu_custom_purchase" name="Sales" action="action_purchase_order_tree"/>
+	<!--
+        +++++++++++++++++++++++++++++
+                Compute Purchase
+        +++++++++++++++++++++++++++++
+        -->
+	<record model="ir.ui.view" id="purchase_order_form">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Orders">
+                    <field name="product_uom_purchase"/>
+                    <field name="price_unit_purchase"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="purchase_order_tree">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Orders">
+                    <field name="stat"/>
+                    <field name="product_uom_purchase"/>
+                    <field name="price_unit_purchase"/>
+                    <field name="price_total_purchase"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--
+        +++++++++++++++++++++++++++++
+                Compute Sale
+        +++++++++++++++++++++++++++++
+        -->
+        <record model="ir.ui.view" id="sale_order_form">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Orders">
+                    <field name="product_uom"/>
+                    <field name="price_unit"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="sale_order_tree">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Orders">
+                    <field name="state"/>
+                    <field name="product_uom"/>
+                    <field name="price_unit"/>
+                    <field name="price_total_sale"/>
+                </tree>
+            </field>
+        </record>
+	<!--
+        +++++++++++++++++++++++++++++
+                Menu Benefit
+        +++++++++++++++++++++++++++++
+        -->
+        <menuitem id="menu_benefit" parent="main_menu_custom" name="Benefit"/>
+    </data>
+</openerp>

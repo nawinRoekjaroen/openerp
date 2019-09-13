@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--
+        ======================
+              Main Menu
+        ======================
+        -->
+        <menuitem icon="terp-sale" id="main_menu_market" name="Market"/>
+        <!--
+        =======================
+              Menu Stock
+        =======================
+        -->
+        <record id="all_stock" model="ir.ui.view">
+            <field name="name">all.stock</field>
+            <field name="model">market.product</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Stock">
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="price_product"/>
+                </tree> 
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_all_stock">
+            <field name="name">Stock</field>
+            <field name="res_model">market.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="all_stock"/>
+        </record>
+        <menuitem id="menu_stocks" parent="main_menu_market"
+                  name="Stocks"/>
+        <menuitem id="stock_product_all" parent="menu_stocks"
+                  name="Stocks Product" action="action_all_stock"/>
+        <!--
+        =========================
+              Menu Purchases
+        =========================
+        -->
+        <record id="new_incomming_stock_form" model="ir.ui.view">
+             <field name="name">new.incomming.form</field>
+             <field name="model">market.sale</field>
+             <field name="type">form</field>
+             <field name="arch" type="xml">
+                 <form string="New Incomming Stock">
+                     <group colspan="4" col="4">
+                         <field name="name"/>
+                         <field name="date"/>
+                     </group>
+                     <notebook colspan="4">
+                         <page string="Purchase Orders">
+                             <group col="2" colspan="4">
+                                 <field name="partner_id"/>
+                                 <field name="stat"/>
+                                 <field name="pricelist_id"/>
+                             </group>
+                             <newline/>
+                                 <field colspan="4" name="sale_id" nolabel="1" widget="one2many_list"/>
+                         </page>
+                     </notebook>
+                     <newline/>
+                         <group col="7" colspan="2">
+                             <field name="amount_total2"/>
+                             <button name="button_dummy2" string="Compute" type="object"/>
+                         </group>
+                 </form>
+             </field>
+        </record>
+        <record id="all_purchase_tree" model="ir.ui.view">
+            <field name="name">all.purchase.tree</field>
+            <field name="model">market.sale</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="All Purchases">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="stat"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_all_purchases">
+            <field name="name">All Purchases</field>
+            <field name="res_model">market.sale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="all_purchase_tree"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_new_incomming">
+            <field name="name">New Purchases</field>
+            <field name="res_model">market.sale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="new_incomming_stock_form"/>
+        </record>
+        <menuitem id="menu_purchases" parent="menu_sales_purchases"
+                  name="Purchase"/>
+        <menuitem id="new_incomming" parent="menu_purchases"
+                  name="New Purchases" action="action_new_incomming"/>
+      <!--  <menuitem id="all_purchase" parent="menu_purchases" name="All Purchases" action="action_all_purchases"/> -->
+        <!--
+        ======================
+              Main Products
+        ======================
+        -->
+        <record id="new_product_form" model="ir.ui.view">
+            <field name="name">new.product.form</field>
+            <field name="model">market.product</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="New Products">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="sequence"/>
+                    <field name="price_product"/>
+                </form>
+            </field>
+        </record> 
+        <record id="new_prodct_tree" model="ir.ui.view">
+            <field name="name">new.product.tree</field>
+            <field name="model">market.product</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="All Product">
+                    <field name="name"/>
+                    <field name="price_product"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_new_product1">
+            <field name="name">All Products</field>
+            <field name="res_model">market.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_new_product">
+            <field name="name">New Product</field>
+            <field name="res_model">market.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+        <menuitem id="menu_products" parent="main_menu_market"
+                  name="Products"/>
+        <menuitem id="product_id" parent="menu_products"
+                  name="All Products" action="action_new_product1"/>
+        <menuitem id="new_product_id" parent="menu_products" name="New Products" action="action_new_product"/>
+       <!--
+        ======================
+              Main Sales
+        ======================
+        -->
+        <record id="new_sale_order_form" model="ir.ui.view">
+            <field name="name">new.sale.order.form</field>
+            <field name="model">market.sale</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="New Sale Orders">
+                    <group colspan="4" col="4">
+                        <field name="name"/>
+                        <field name="date"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Sale Order">
+                            <group colspan="2" col="2">
+                                <field name="partner_id"/>
+                                <field name="pricelist_id"/>
+                                <field name="stat"/>
+                            </group>
+                            <newline/>
+                               <field colspan="4" name="purchase_id" nolabel="1" widget="one2many_list"/> 
+                        </page>
+                    </notebook>
+                    <newline/>
+                        <group col="7" colspan="2">
+                            <field name="amount_untaxed"/>
+                            <field name="amount_total"/>
+                            <button name="button_dummy" string="Compute" type="object"/>
+                        </group>   
+                </form>
+            </field>
+        </record> 
+        <record id="all_sale_order_tree" model="ir.ui.view">
+            <field name="name">all.sale.order.tree</field>
+            <field name="model">market.sale</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="All Sale Orders">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="stat"/>
+                    <field name="amount_total" sum="Total Sale"/>
+                    <field name="amount_total2" sum="Total Purchase"/>
+                    <field name="price_balance" sum="Total Balance"/> 
+                </tree> 
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sale_order">
+            <field name="name">New Sale Orders</field>
+            <field name="res_model">market.sale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="new_sale_order_form"/>
+        </record>
+        <record model="ir.actions.act_window" id="action_sale_order1">
+            <field name="name">All Sale Orders</field>
+            <field name="res_model">market.sale</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="all_sale_order_tree"/>
+        </record>
+        <menuitem id="menu_sales_purchases" parent="main_menu_market"
+                  name="Sales and Purchases"/>
+        <menuitem id="all_sale_id" parent="menu_sales_purchases"
+                  name="All Sale And Purchases Order" action="action_sale_order1"/>
+        <menuitem id="menu_sales" parent="menu_sales_purchases"
+                  name="Sales"/>
+        <menuitem id="new_sale_id" parent="menu_sales"
+                  name="New Sale Order" action="action_sale_order"/>
+        <!--
+        ======================
+              Main Invoice
+        ======================
+        -->
+
+        <menuitem id="menu_invoice" parent="main_menu_market"
+                  name="Invoice"/>   
+        <menuitem id="invoice_id" parent="menu_invoice"
+                  name="Invoice" action=""/>
+        <!--
+        ====================================
+              campute sale & Purchases
+        ====================================
+        -->
+        <record model="ir.ui.view" id="purchase_and_sale_form">
+            <field name="name">purchase.and.sale.form</field>
+            <field name="model">market.purchase.sale</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sale Orders">
+                    <field name="product"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_unit"/>
+                    <field name="discount"/>
+                </form>	
+            </field>
+        </record>
+        <record model="ir.ui.view" id="purchase_and_sale_tree">
+            <field name="name">purchase.and.sale.tree</field>
+            <field name="model">market.purchase.sale</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Orders">
+                    <field name="product"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_unit"/>
+                    <field name="discount"/>
+                    <field name="price_suptotal"/>
+                </tree>
+            </field> 
+        </record>
+        <record model="ir.ui.view" id="purchase_and_sale_sale_form">
+            <field name="name">purchase.and.sale.sale.form</field>
+            <field name="model">market.purchase.sale.sale</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Orders">
+                    <field name="product"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_unit"/>
+                    <field name="discount"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="purchase_and_sale_sale_tree">
+            <field name="name">purchase.and.sale.sale.tree</field>
+            <field name="model">market.purchase.sale.sale</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Orders">
+                    <field name="product"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_unit"/>
+                    <field name="discount"/>
+                    <field name="price_total"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
